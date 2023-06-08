@@ -128,7 +128,27 @@ getBtnTelaInicial.addEventListener('click', async () => {
     formDataNick.append('acao', 'GET');
     formDataNick.append('Jogador', getNickName.value)
 
+    function barraDecarregamento() {
+        if (getNickName.value.length > 0) {
 
+            let timeBtncomecar = setInterval(() => {
+
+                document.querySelector('.load').style.width = barraLoad + "%";
+
+                if (barraLoad == 100) {
+                    clearInterval(timeBtncomecar);
+
+                    document.querySelector('main').style = "display: block";
+                    nomeJogador = getNickName.value //.toUpperCase();
+                    
+
+                }
+
+                barraLoad += 25;
+            }, 200)
+
+        }
+    }
 
     const getJson = await fetch(url, {
         method: 'POST',
@@ -140,28 +160,13 @@ getBtnTelaInicial.addEventListener('click', async () => {
 
 
             if (dados.status == false) {
-                if (getNickName.value.length > 0) {
-
-                    let timeBtncomecar = setInterval(() => {
-
-                        document.querySelector('.load').style.width = barraLoad + "%";
-
-                        if (barraLoad == 100) {
-                            clearInterval(timeBtncomecar);
-
-                            document.querySelector('main').style = "display: block";
-                            nomeJogador = getNickName.value //.toUpperCase();
-                            document.querySelector('#tela-inicial').remove()
-
-                        }
-
-                        barraLoad += 25;
-                    }, 200)
-
-                }
+                //carregar barra de carregamento
+                barraDecarregamento();
+                
+                document.querySelector('#tela-inicial').remove()
             } else {
                 //modal-content
-
+                
                 console.log(dados.resposta)
                 document.querySelector('#form label')
                     .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
@@ -184,8 +189,8 @@ getBtnTelaInicial.addEventListener('click', async () => {
 
                     document.querySelector('.modal-content h2').innerHTML = `${dados.resposta.jogador}`
                     document.querySelector('.modal-content p').
-                    innerHTML = `Acertos: ${dados.resposta.acertos} Erros: ${dados.resposta.erros} Tempo: ${dados.resposta.duracao}`;
-               
+                        innerHTML = `Acertos: ${dados.resposta.acertos} Erros: ${dados.resposta.erros} Tempo: ${dados.resposta.duracao}`;
+
                 })
 
             }
