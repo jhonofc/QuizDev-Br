@@ -8,25 +8,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/listaJogadores.css">
+    <link rel="stylesheet" href="css/modal.css">
     <title>Quiz - Dev</title>
 </head>
 
 <body>
-    
+    <section id="modal">
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <h2>Modal Popup</h2>
+              <p>Este é um exemplo de um modal popup.</p>
+            </div>
+          </div>
+    </section>
     
     <section id="getName">
         
         <div id="tela-inicial">
             <div id="form">
                 <label for="nick-name">NICKNAME:</label>
-                <input type="text" id="nick-name" name="nick-name" placeholder="LukeDev" maxlength="10">
+<input type="text" id="nick-name" name="nick-name" placeholder="LukeDev" maxlength="10">
                 <div class="comecar">
                     <div class="barra">
                         <div class="load">
                             
                         </div>
                     </div>
-                    <input type="button" value="Começar" id="btn-comecar">
+                    <input type="button" value="Resultado" class="btn-inicial hide" id="btn-resultado">
+                    <input type="button" value="Começar" class="btn-inicial" id="btn-comecar">
+                    
                 </div>
             </div>
         </div>
@@ -118,6 +129,7 @@
 <script src="script/svg.js"></script>
 <script src="script/perguntas.js"></script>
 <script src="script/carregarStyle.js"></script>
+<script src="script/modal.js"></script>
 
 
 
