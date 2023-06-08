@@ -38,7 +38,7 @@ let questoesgeradas = []; //novo  código
 
 let arrayNum = [];
 function gerarAle() {
-    return Math.floor(Math.random() * 13);
+    return Math.floor(Math.random() * 17);
 }
 arrayNum.push(gerarAle());
 //gerar array de 10 numeros ale
