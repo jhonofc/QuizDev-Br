@@ -291,7 +291,67 @@ function funcao_questoes(){
 
         E) N.D.A</li>
 </ul>
-`,
+`, `
+<div class="titulo-pergunta A9cfe2"><span class="gerar-n-questao"></span>) HTML é uma linguagem de...</div>
+
+<ul>
+    <li class="hover">
+
+        A) Exclusão.</li>
+    <li class="hover">
+
+        B) Programação.</li>
+    <li class="hover">
+
+        C) Marcação de Hipertexto</li>
+    <li class="hover">
+
+        D) estilização</li>
+    <li class="hover">
+
+        E) N.D.A</li>
+</ul>
+`, `
+<div class="titulo-pergunta A3cbf0"><span class="gerar-n-questao"></span>) Qual é a função da tag <head> em um documento HTML?</div>
+
+<ul>
+    <li class="hover">
+
+        A) Contém metadados e informações sobre o documento HTML </li>
+    <li class="hover">
+
+        B) Define uma seção de cabeçalho</li>
+    <li class="hover">
+
+        C)  Define uma seção de rodapé</li>
+    <li class="hover">
+
+        D)  Define o conteúdo principal da página</li>
+    <li class="hover">
+
+        E) Define a estrutura básica da página</li>
+</ul>
+`, `
+<div class="titulo-pergunta A4bca1"><span class="gerar-n-questao"></span>) Qual é a diferença entre as tags <div> e <span></div>
+
+<ul>
+    <li class="hover">
+
+        A) Ambas são usadas para criar títulos em HTML </li>
+    <li class="hover">
+
+        B) <div> é usada para agrupar elementos em blocos, enquanto <span>  em linha</li>
+    <li class="hover">
+
+        C)  <span> é usada para criar tabelas, enquanto <div> é usada para criar listas</li>
+    <li class="hover">
+
+        D) <div> é usada para criar links, enquanto <span> é usada para criar botões</li>
+    <li class="hover">
+
+        E) Não há diferença entre elas</li>
+</ul>
+`
 
 
 ]
