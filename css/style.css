@@ -1,0 +1,421 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    transition: .5s;
+}
+main{
+    display: none;
+}
+body,html{
+    background-color: #F6F6F6; 
+}
+#container{
+    background-color: #F6F6F6;
+     padding-bottom: 50px; 
+    
+}
+
+.quiz-topo{
+    padding: 30px 0px 30px 20px;    
+    color: #fff;
+    font-size: 1.3rem;
+}
+.topo{
+    display: flex;
+    justify-content: space-between;
+}
+
+#Topo a{
+    color: #fff;
+    text-decoration: none;
+}
+.barra-logo{   
+    background-color: #024467;    
+    width: 70%;
+    
+}
+.barra-data{  
+    display: flex;  
+    background-color: #69CAFF;   
+    width: 30%;
+    justify-content: center;
+}
+.titulo{
+    display: flex;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 10px 0;
+    color: #024467;
+}
+#perguntas{
+    display: flex;
+    justify-content: center;   
+    margin-top: 10px;
+
+}
+
+.questoes{
+    display: flex;
+    
+    align-items: center;
+    flex-direction: column;
+    background-color: #E6E7E8;
+    border-radius: 10px;
+    width: 80%;
+    padding: 10px 0;
+}
+
+.titulo-pergunta{
+    margin: 10px;
+    font-size: 1.6rem;
+    background-color: #69CAFF;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    width: 85%;
+   
+}
+.titulo-pergunta code{
+    word-break: break-all;
+    color: #fff;
+    font-style: italic;
+    font-size: 1.4rem;
+}
+#btn-box{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.btn-box{
+    display: flex;
+    width: 80%;
+    justify-content: flex-end;
+}
+.btn-proximo{
+    background-color: #00A859;
+    border-radius: 15px;
+    cursor: pointer;
+    color: #fff;
+    padding: 8px;
+    width: 80px;    
+    text-align: center;
+    margin-left: 10px;   
+}
+#btn-proximo{
+    opacity: 100%;
+}
+.reiniciar{
+    background-color: #a80000;
+}
+.btn-proximo:hover, .sim:hover{
+    background-color: #06d776;
+}
+.reiniciar:hover, .nao:hover{
+    background-color: #e43737;
+}
+#pontuacao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    
+}
+.pontuacao{
+    display: flex;
+    width: 80%;
+    background-color: #024467; 
+    padding: 30px 0;
+    border-radius: 10px;
+    color: #fff;
+    justify-content: center;
+    
+}
+
+.pontuacao span{
+    margin: 0px;
+    font-size: 1.8rem;
+    text-align: center;
+
+}
+
+li{
+    margin: 5px;
+    list-style-type: none;
+    font-size: 1.5rem;
+    padding: 5px;
+    border-bottom: 2px solid #c3c3c3;
+    
+}
+.hover:hover{
+    background-color: #69CAFF;
+    border-radius: 10px;
+}
+
+li, input[type=radio]{
+    cursor: pointer;
+}
+
+.hide, #duracao{
+    display: none;
+}
+
+.cursor{
+   cursor:not-allowed;
+}
+.jogadores{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.lista{
+    background-color: #024467; 
+    text-align: center;
+    margin: 10px 0;
+    padding: 10px 0;
+    width: 80%;
+    color: #fff;
+    border-radius: 10px;
+    
+}
+
+#msg{
+    position: relative;
+    
+   
+}
+.alert{
+    transition: .5s;
+    background-color: #fffec9;
+    height: 50px;
+    border-radius: 0 0 15px 15px;
+    padding: 15px 15px 5px 15px;
+    text-align: center;
+    position: fixed;
+    top: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+   
+    
+}
+
+.colocar-alert{
+    top: 25px;
+    height: 80px;
+    padding-top: 55px;
+    margin-top: 20px;
+}
+.btn-acao{
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px;
+}
+.btn-SN{
+    border-radius: 5px;
+    cursor: pointer;
+    color: #fff;
+    padding: 4px;      
+    text-align: center;
+    font-size: .9rem;
+    margin-left: 5px;
+    
+}
+
+.sim{
+    background-color: #00A859;
+    
+}
+.nao{
+    
+   background-color: #a80000;
+}
+
+#acertos, #erros{
+    margin-right: 5px;
+}
+
+
+.lista{
+    position: relative ;
+    
+}
+
+.ultimoganhador svg{
+    position: absolute;
+    width: 40px;
+    bottom: 5px;
+    right: -15px;
+    cursor: pointer;
+}
+
+[data-tooltip] {
+    position: relative;
+    
+  }
+  
+  [data-tooltip]:after {
+    display: none;
+    position: absolute;
+    top: -5px;
+    padding: 5px;
+    border-radius: 3px;
+    right: calc(1% + 2px);
+    content: attr(data-tooltip);
+    white-space: nowrap;
+    background-color: #69CAFF;
+    color: White;
+    z-index: 999;
+  }
+  
+  [data-tooltip]:hover:after {
+    display: block;
+  }
+
+  .boxWhats svg{
+    width: 30px;
+    height: 30px;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 10px 0px 0px 10px;
+  }
+
+  .whatsApp{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+  }
+
+  .boxWhats{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    
+  }
+
+  .textoZAp{
+    background-color: #00A859;
+    color: #fff;
+    padding: 5px;
+    border-radius: 0px 10px 10px 0px;
+
+  }
+
+  #tela-inicial{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position:  fixed ;
+    background-image: linear-gradient(180deg, #024467, #036fa9);
+    width: 100vw;
+    height: 100vh;
+  }
+/* css form */
+  #form {
+    
+    width: 80%; 
+    max-width: 500px;   
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  #form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333333;
+  }
+
+  #nick-name {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+.comecar{
+    display: flex;
+    color: #fff;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+}
+.comecar #btn-comecar{
+    padding: 5px 5px;
+    margin-left: 5px;
+    ;
+    background: #00A859;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+.comecar #btn-comecar:hover{
+    background-color: #02c96c;
+}
+  .barra{    
+    width: 90%;
+    height: 25px;
+    
+    background-color:#024467;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    
+  }
+ 
+
+.load{    
+    background-color: #69CAFF;    
+    height: 100%;
+    width: 0%;
+    border-radius: 5px;
+    
+}
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+
+ .opacidade{
+    opacity: 0;
+}
+
+#loading{
+  display: none;
+}
+
+
+@media (max-width: 700px){
+    .pontuacao span{
+        font-size:  1rem;
+    }
+  .pontuacao{
+     width: 80%;
+     flex-direction: row;
+     justify-content: center ;
+   }
+    .colocar-alert {
+        width: 50%; 
+    }
+    .questoes{
+        width: 95%;
+        
+    }
+    #getName form {
+    margin-bottom: 50%;
+    
+  }
+  .questoes {
+ 
+    align-items: stretch;
+  } 
+    
+}
