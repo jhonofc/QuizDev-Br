@@ -104,6 +104,18 @@ document.querySelectorAll('.gerar-n-questao')[controle].textContent = numeroDaQu
 
 
 //barra ninical pegar nome do jogador nick name
+
+let getnick_name = document.querySelector('#nick-name ');
+
+getnick_name.addEventListener('input', () => {
+
+    if (!document.querySelector('#btn-resultado').classList.contains('hide')) {
+        document.querySelector('#btn-resultado').classList.toggle('hide')
+    }
+
+
+});
+
 let barraLoad = 0;
 let getBtnTelaInicial = document.querySelector('#btn-comecar');
 
@@ -117,7 +129,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
     formDataNick.append('Jogador', getNickName.value)
 
 
- 
+
     const getJson = await fetch(url, {
         method: 'POST',
         body: formDataNick,
@@ -126,7 +138,8 @@ getBtnTelaInicial.addEventListener('click', async () => {
         .then(dados => {
 
 
-            if (dados == 'false') {
+
+            if (dados.status == false) {
                 if (getNickName.value.length > 0) {
 
                     let timeBtncomecar = setInterval(() => {
@@ -135,6 +148,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
 
                         if (barraLoad == 100) {
                             clearInterval(timeBtncomecar);
+
                             document.querySelector('main').style = "display: block";
                             nomeJogador = getNickName.value //.toUpperCase();
                             document.querySelector('#tela-inicial').remove()
@@ -145,12 +159,35 @@ getBtnTelaInicial.addEventListener('click', async () => {
                     }, 200)
 
                 }
-            }else{
+            } else {
+                //modal-content
+
+                console.log(dados.resposta)
                 document.querySelector('#form label')
-                .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
-                setTimeout(()=>{
-                    document.querySelector('#form label').innerHTML = 'NICKNAME:';
-                },3000)
+                    .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
+                document.querySelector('#btn-resultado').classList.toggle('hide', false)
+                setTimeout(() => {
+                    if (document.querySelector('#form label') != null) {
+                        document.querySelector('#form label').innerHTML = 'NICKNAME:';
+
+                    }
+
+                }, 3000);
+
+                let getBtnResultado = document.querySelector('#btn-resultado')
+                getBtnResultado.addEventListener('click', () => {
+
+                    document.getElementById("myModal").style.display = "block";
+                    document.getElementsByClassName("close")[0].addEventListener("click", function () {
+                        document.getElementById("myModal").style.display = "none";
+                    });
+
+                    document.querySelector('.modal-content h2').innerHTML = `${dados.resposta.jogador}`
+                    document.querySelector('.modal-content p').
+                    innerHTML = `Acertos: ${dados.resposta.acertos} Erros: ${dados.resposta.erros} Tempo: ${dados.resposta.duracao}`;
+               
+                })
+
             }
 
 
@@ -225,7 +262,7 @@ function setLocal() {
 
         let getJogadores = document.querySelector('.jogadores');
 
-        
+
         const getJson = await fetch(url, {
             method: 'POST',
             body: dadosInserirBackEnd,
@@ -247,7 +284,7 @@ function setLocal() {
                 for (let x in arrayEmOrdem) {
                     let criarDiv = document.createElement('div');
                     criarDiv.setAttribute('class', 'lista');
-                    criarDiv.setAttribute('style','border-radius: 8px')
+                    criarDiv.setAttribute('style', 'border-radius: 8px')
                     criarDiv.innerHTML = `
 
                     <span class="infoJogadoresFelx">  
@@ -348,20 +385,20 @@ function gerarTempo() {
 
         if (controle > 9) {
             //retirar configuação ultma tela 
-            
+
             document.querySelector('#btn-box').style = 'display: none';
             document.querySelector('.fim').style = 'display: none';
-            document.querySelector('.pontuacao').style = 'padding: 0px 0px 20px 0px;';
+            document.querySelector('.pontuacao').style = 'padding: 6px 0px 6px 0px;';
             document.querySelector('#loading').style = 'display: block';
             document.querySelector('#pontuacao').style = 'margin-top: 0';
 
-            if(window.screen.width < 500){
+            if (window.screen.width < 500) {
                 carregarStyle();
             }
             //contagem loading recebendo json do servidor 
             intervalLoading = setInterval(() => {
 
-               // document.querySelector('#progresso').textContent = loading;
+                // document.querySelector('#progresso').textContent = loading;
 
                 loading += 1;
             }, 100);
@@ -582,6 +619,7 @@ let inputNinck = document.querySelector('#nick-name');
 inputNinck.addEventListener('input', (e) => {
     e.preventDefault();
 })
+
 
 
 
