@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/listaJogadores.css">
+    <title>Quiz - Dev</title>
+</head>
+
+<body>
+    
+    
+    <section id="getName">
+        
+        <div id="tela-inicial">
+            <div id="form">
+                <label for="nick-name">NICKNAME:</label>
+                <input type="text" id="nick-name" name="nick-name" placeholder="LukeDev" maxlength="10">
+                <div class="comecar">
+                    <div class="barra">
+                        <div class="load">
+                            
+                        </div>
+                    </div>
+                    <input type="button" value="Começar" id="btn-comecar">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main id="container">
+        <!-- alertas -->
+        <section>
+            <div id="msg">
+
+                <div class="alert proximo">
+                    <div class="texto">Selecione umas das questões</div>
+                </div>
+
+                <div class="alert reiniciar-alert">
+                    <div class="texto">Deseja reiniciar o Quiz?
+                        <div class="btn-acao">
+                            <span id="sim" class="sim btn-SN">Sim</span>
+                            <span id="nao" class="nao btn-SN">Não</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topo -->
+        <header id="Topo">
+            <div class="topo">
+                <span class="barra-logo quiz-topo" ><a href="index.html" translate="no">Quiz-Dev</a></span>
+                <span id="data" class="barra-data quiz-topo"></span>
+            </div>
+        </header>
+
+        <section id="Dez-Questoes">
+            <div id="perguntas" class="perguntas">
+                <div class="questoes "></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes hide"></div>
+                <div class="questoes fim hide"></div>
+
+            </div>
+        </section>
+
+        <div id="btn-box">
+            <div class="btn-box">
+                <div id="btn-proximo" class="btn-proximo">Próximo</div>
+                <div class="btn-proximo reiniciar hide">Reiniciar</div>
+
+            </div>
+        </div>
+        <div id="pontuacao">
+
+            <div class="titulo titulo-pontuacao">
+
+            </div>
+            <div class="pontuacao">
+                <span id="inicio">Pronto para Iniciar!</span>
+                <span id="acertos"></span>
+                <span id="erros"></span>
+                <span id="duracao">
+                    Tempo:
+                    <span id="setTempo"></span>
+                </span>
+                
+            </div>
+            <div id="loading">
+              carregando 
+              <span></span>
+            </div>
+        </div>
+
+        <footer>
+            <div class="jogadores"></div>
+           
+        </footer>
+
+    </main>
+
+    
+</body>
+<script src="script/script.js" defer></script>
+<script src="script/svg.js"></script>
+<script src="script/perguntas.js"></script>
+<script src="script/carregarStyle.js"></script>
+
+
+
+</html>
