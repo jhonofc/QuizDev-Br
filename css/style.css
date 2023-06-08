@@ -346,7 +346,7 @@ li, input[type=radio]{
     align-items: center;
     margin-top: 10px;
 }
-.comecar #btn-comecar{
+.comecar .btn-inicial{
     padding: 5px 5px;
     margin-left: 5px;
     ;
@@ -355,6 +355,9 @@ li, input[type=radio]{
     border-radius: 5px;
     color: #fff;
     cursor: pointer;
+}
+#btn-resultado{
+    background: #be0010;
 }
 .comecar #btn-comecar:hover{
     background-color: #02c96c;
