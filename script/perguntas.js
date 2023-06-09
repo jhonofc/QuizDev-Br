@@ -312,7 +312,7 @@ function funcao_questoes(){
         E) N.D.A</li>
 </ul>
 `, `
-<div class="titulo-pergunta A3cbf0"><span class="gerar-n-questao"></span>) Qual é a função da tag <head> em um documento HTML?</div>
+<div class="titulo-pergunta A3cbf0"><span class="gerar-n-questao"></span>) Qual é a função da tag head em um documento HTML?</div>
 
 <ul>
     <li class="hover">
