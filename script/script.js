@@ -28,7 +28,8 @@ let pontuacao = 0; //acertos
 let erros = 0; //questões erradas
 let nomeJogador;//prompt("Qual seu nome?");
 let inicarContagemTempo = 0;
-//const url = "http://johncy.000.pe/php/processar.php";
+let barraLoad = 0;
+//const url = "https://johncy.000.pe/php/processar.php";
 const url = 'http://jhoncy.000webhostapp.com/php/processar.php';
 
 /////////////************************************************************************ */
@@ -117,103 +118,112 @@ getnick_name.addEventListener('input', () => {
 
 });
 
-let barraLoad = 0;
+
 let getBtnTelaInicial = document.querySelector('#btn-comecar');
 
 getBtnTelaInicial.addEventListener('click', async () => {
-    let getNickName = document.querySelector('#nick-name')
-//backup carregamento barra
-    
-
-    let formDataNick = new FormData();
-    formDataNick.append('acao', 'GET');
-    formDataNick.append('Jogador', getNickName.value)
 
 
+    //BARRA LOAD CARREGANDPO 
+    let timeBtncomecar;
+    let veririficarJson = 0;
 
-    const getJson = await fetch(url, {
-        method: 'POST',
-        body: formDataNick,
-    })
-        .then(response => response.json())
-        .then(dados => {
+    if (document.querySelector('#nick-name').value.length > 0) {
 
-            // if (getNickName.value.length > 0) {
+        timeBtncomecar = setInterval(() => {
 
-            //     let timeBtncomecar = setInterval(() => {
-        
-            //         document.querySelector('.load').style.width = barraLoad + "%";
-        
-            //         if (barraLoad == 100) {
-            //             clearInterval(timeBtncomecar);
-        
-            //             document.querySelector('main').style = "display: block";
-            //             nomeJogador = getNickName.value //.toUpperCase();
-            //             document.querySelector('#tela-inicial').remove()
-        
-            //         }
-        
-            //         barraLoad += 25;
-            //     }, 200)
-        
-            // }
-
-            if (dados.status == false) {
-
-                if (getNickName.value.length > 0) {
-
-                    let timeBtncomecar = setInterval(() => {                        
-                        document.querySelector('.load').style.width = barraLoad + "%";
-                        if (barraLoad == 100) {
-                            
-                            clearInterval(timeBtncomecar);
-
-                            document.querySelector('main').style = "display: block";
-                            nomeJogador = getNickName.value //.toUpperCase();
-                            document.querySelector('#tela-inicial').remove()
-
-                        }
-
-                        barraLoad += 25;
-                    }, 200)
-
-                }
-            } else {
-                //modal-content
-
-                
-                document.querySelector('#form label')
-                    .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
-                document.querySelector('#btn-resultado').classList.toggle('hide', false)
-                setTimeout(() => {
-                    if (document.querySelector('#form label') != null) {
-                        document.querySelector('#form label').innerHTML = 'NICKNAME:';
-
-                    }
-                    document.querySelector('.load').style.width =  "0%";
-                }, 3000);
-
-                let getBtnResultado = document.querySelector('#btn-resultado')
-                getBtnResultado.addEventListener('click', () => {
-
-                    document.getElementById("myModal").style.display = "block";
-                    document.getElementsByClassName("close")[0].addEventListener("click", function () {
-                        document.getElementById("myModal").style.display = "none";
-                    });
-
-                    document.querySelector('.modal-content h2').innerHTML = `${dados.resposta.jogador}`
-                    document.querySelector('.modal-content p').
-                    innerHTML = `Acertos: ${dados.resposta.acertos} Erros: ${dados.resposta.erros} Tempo: ${dados.resposta.duracao}`;
-               
-                })
+            document.querySelector('.load').style.width = barraLoad + "%";
+            document.querySelector('.load').textContent = 'carregando...';
+            if (barraLoad == 100 && veririficarJson == 0) {
+                barraLoad = 0;
 
             }
 
+            barraLoad += 25;
+        }, 200)
 
 
-        })
+        let getNickName = document.querySelector('#nick-name');
+        //backup carregamento barra
+
+        let formDataNick = new FormData();
+        formDataNick.append('acao', 'GET');
+        formDataNick.append('Jogador', getNickName.value)
 
 
+        let json;
+
+        try {
+            let response = await fetch(url, { method: 'POST', body: formDataNick, });
+
+            if (!response) {
+                document.querySelector('.load').textContent = '';
+                throw Error("Erro");
+
+            }
+            json = response.json();
+
+        } catch (err) {
+
+            document.getElementById("myModal").style.display = "block";
+            document.getElementsByClassName("close")[0].addEventListener("click", function () {
+                document.getElementById("myModal").style.display = "none";
+            });
+
+            document.querySelector('.modal-content h2').innerHTML = `Erro ao se comunicar com o servidor: `
+            document.querySelector('.modal-content p').innerHTML = err;
+            
+            clearInterval(timeBtncomecar);
+            document.querySelector('.load').style.width = "0%";
+            document.querySelector('.load').textContent = '';
+        }
+
+        if (json) {
+
+            json.then(data => {
+
+                if (data.status == true) {
+                    document.querySelector('.load').textContent = '';
+                    //modal-content                
+                    document.querySelector('#form label')
+                        .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
+                    document.querySelector('#btn-resultado').classList.toggle('hide', false)
+                    setTimeout(() => {
+                        if (document.querySelector('#form label') != null) {
+                            document.querySelector('#form label').innerHTML = 'NICKNAME:';
+
+                        }
+                        document.querySelector('.load').style.width = "0%";
+                    }, 3000);
+
+                    let getBtnResultado = document.querySelector('#btn-resultado')
+                    getBtnResultado.addEventListener('click', () => {
+
+                        document.getElementById("myModal").style.display = "block";
+                        document.getElementsByClassName("close")[0].addEventListener("click", function () {
+                            document.getElementById("myModal").style.display = "none";
+                        });
+
+                        document.querySelector('.modal-content h2').innerHTML = `${dados.resposta.jogador}`
+                        document.querySelector('.modal-content p').
+                            innerHTML = `Acertos: ${dados.resposta.acertos} Erros: ${dados.resposta.erros} Tempo: ${dados.resposta.duracao}`;
+
+                    })
+
+                } else {
+                    document.querySelector('main').style = "display: block";
+                    nomeJogador = getNickName.value //.toUpperCase();
+                    document.querySelector('#tela-inicial').remove()
+                }
+            })
+
+            clearInterval(timeBtncomecar);
+            document.querySelector('.load').style.width = "100%";
+            //****/           
+
+        }
+        //fim do bloco click
+    }
 })
 
 //Gerar hora do topo
