@@ -332,7 +332,7 @@ function funcao_questoes(){
         E) Define a estrutura básica da página</li>
 </ul>
 `, `
-<div class="titulo-pergunta A4bca1"><span class="gerar-n-questao"></span>) Qual é a diferença entre as tags <div> e <span></div>
+<div class="titulo-pergunta A4bca1"><span class="gerar-n-questao"></span>) Qual é a diferença entre as tags div e span</div>
 
 <ul>
     <li class="hover">
@@ -340,13 +340,13 @@ function funcao_questoes(){
         A) Ambas são usadas para criar títulos em HTML </li>
     <li class="hover">
 
-        B) <div> é usada para agrupar elementos em blocos, enquanto <span>  em linha</li>
+        B) <div> é usada para agrupar elementos em blocos, enquanto span  em linha</li>
     <li class="hover">
 
-        C)  <span> é usada para criar tabelas, enquanto <div> é usada para criar listas</li>
+        C)  <span> é usada para criar tabelas, enquanto div é usada para criar listas</li>
     <li class="hover">
 
-        D) <div> é usada para criar links, enquanto <span> é usada para criar botões</li>
+        D) <div> é usada para criar links, enquanto span é usada para criar botões</li>
     <li class="hover">
 
         E) Não há diferença entre elas</li>
