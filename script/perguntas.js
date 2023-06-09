@@ -343,10 +343,10 @@ function funcao_questoes(){
         B) div é usada para agrupar elementos em blocos, enquanto span  em linha</li>
     <li class="hover">
 
-        C)  <span> é usada para criar tabelas, enquanto div é usada para criar listas</li>
+        C)  span é usada para criar tabelas, enquanto div é usada para criar listas</li>
     <li class="hover">
 
-        D) <div> é usada para criar links, enquanto span é usada para criar botões</li>
+        D) div é usada para criar links, enquanto span é usada para criar botões</li>
     <li class="hover">
 
         E) Não há diferença entre elas</li>
