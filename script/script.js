@@ -181,7 +181,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
         if (json) {
 
             json.then(data => {
-
+            
                 if (data.status == true) {
                     document.querySelector('.load').textContent = '';
                     //modal-content                
@@ -197,6 +197,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
                     }, 3000);
 
                     let getBtnResultado = document.querySelector('#btn-resultado')
+
                     getBtnResultado.addEventListener('click', () => {
 
                         document.getElementById("myModal").style.display = "block";
@@ -204,9 +205,9 @@ getBtnTelaInicial.addEventListener('click', async () => {
                             document.getElementById("myModal").style.display = "none";
                         });
 
-                        document.querySelector('.modal-content h2').innerHTML = `${dados.resposta.jogador}`
+                        document.querySelector('.modal-content h2').innerHTML = `${data.resposta.jogador}`
                         document.querySelector('.modal-content p').
-                            innerHTML = `Acertos: ${dados.resposta.acertos} Erros: ${dados.resposta.erros} Tempo: ${dados.resposta.duracao}`;
+                            innerHTML = `Acertos: ${data.resposta.acertos} Erros: ${data.resposta.erros} Tempo: ${data.resposta.duracao}`;
 
                     })
 
