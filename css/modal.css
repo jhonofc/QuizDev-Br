@@ -12,7 +12,7 @@
   
   .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
@@ -34,8 +34,22 @@
   }
   
   #resultado-todos-users{
-    margin: -10% auto 50px auto;
+    margin: -3% auto 50px auto;
   }
   #resultado-todos-users .lista{
       background-color: #ededed70;
   }
+
+
+  @media (max-width: 700px){
+    #resultado-todos-users{
+      margin: -10% auto 50px auto;
+    }
+
+    .modal-content {     
+      margin: 15% auto;
+     
+    }
+    
+    
+}
