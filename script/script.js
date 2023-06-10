@@ -29,8 +29,8 @@ let erros = 0; //questões erradas
 let nomeJogador;//prompt("Qual seu nome?");
 let inicarContagemTempo = 0;
 let barraLoad = 0;
-//const url = "https://johncy.000.pe/php/processar.php";
-const url = 'http://jhoncy.000webhostapp.com/php/processar.php';
+const url = "https://johncy.000.pe/php/processar.php";
+//const url = 'http://jhoncy.000webhostapp.com/php/processar.php';
 
 /////////////************************************************************************ */
 // inicio parte responsável por colocar as questões em ordem aleatorias
