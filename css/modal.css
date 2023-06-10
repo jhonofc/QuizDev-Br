@@ -33,3 +33,9 @@
     cursor: pointer;
   }
   
+  #resultado-todos-users{
+    margin: -10% auto 50px auto;
+  }
+  #resultado-todos-users .lista{
+      background-color: #ededed70;
+  }
