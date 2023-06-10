@@ -346,7 +346,7 @@ li, input[type=radio]{
     align-items: center;
     margin-top: 10px;
 }
-.comecar .btn-inicial{
+.btn-inicial{
     padding: 5px 5px;
     margin-left: 5px;
     ;
@@ -356,7 +356,7 @@ li, input[type=radio]{
     color: #fff;
     cursor: pointer;
 }
-#btn-resultado{
+#btn-resultado, #btn-refazer-quiz{
     background: #be0010;
 }
 .comecar #btn-comecar:hover{
@@ -395,6 +395,15 @@ li, input[type=radio]{
   display: none;
 }
 
+#lista-todos-jogadores{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 15px;
+    
+}
+#lista-todos-jogadores input{
+    padding: 10px 10px;
+}
 
 @media (max-width: 700px){
     .pontuacao span{
