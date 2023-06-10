@@ -29,8 +29,9 @@ let erros = 0; //questões erradas
 let nomeJogador;//prompt("Qual seu nome?");
 let inicarContagemTempo = 0;
 let barraLoad = 0;
-const url = "https://johncy.000.pe/php/processar.php";
-//const url = 'http://jhoncy.000webhostapp.com/php/processar.php';
+
+//const url = "https://johncy.000.pe/php/processar.php";
+const url = 'http://jhoncy.000webhostapp.com/php/processar.php';
 
 /////////////************************************************************************ */
 // inicio parte responsável por colocar as questões em ordem aleatorias
@@ -112,21 +113,56 @@ let getnick_name = document.querySelector('#nick-name ');
 getnick_name.addEventListener('input', () => {
 
     if (!document.querySelector('#btn-resultado').classList.contains('hide')) {
-        document.querySelector('#btn-resultado').classList.toggle('hide')
+        document.querySelector('#btn-resultado').classList.toggle('hide')        
     }
 
+    if (document.querySelector('#form label') != null) {
+       document.querySelector('#form label').innerHTML = 'NICKNAME:';
+     }
 
 });
 
+function setSVGLista(onde) {
+    function iconeSVG(cor, pontuacao) {
+        return `<div class="ultimoganhador" data-tooltip="${pontuacao}">
+                 <svg viewBox="0 0 501.333 501.333">
+                <path fill="#91573b" d="M136.533 359.467H364.8v141.867H136.533z" />
+                <ellipse cx="250.667" cy="430.933" fill="#e0e0df" rx="81.067" ry="48" />
+                <path fill="#e14a4a" d="M174.933 314.667H326.4v44.8H174.933z" />
+                <path fill="#f16d6e" d="M228.267 195.2h44.8v119.467h-44.8z" />
+                <path fill="${cor}"
+                    d="M250.667 0L284.8 105.6h110.933l-89.6 65.067L340.267 275.2l-89.6-65.067-89.6 65.067L195.2 170.667 105.6 105.6h110.933z" />
+            </svg>
+        </div>`
+    }
+    let getLista = document.querySelectorAll('#' + onde + ' .lista')
+    if (getLista[0] != undefined) {
+        getLista[0].innerHTML += iconeSVG('#fec656', 'Última maior pontuação');
+    }
+    if (getLista[1] != undefined) {
+        getLista[1].innerHTML += iconeSVG('#cccccc', 'Segunda maior pontuação');
+    }
+    if (getLista[2] != undefined) {
+        getLista[2].innerHTML += iconeSVG('#be6c00', 'Terceira maior pontuação');
+    }
+}
+function erroModal(texto,err){
+    document.getElementById("myModal").style.display = "block";
+            document.getElementsByClassName("close")[0].addEventListener("click", function () {
+                document.getElementById("myModal").style.display = "none";
+            });
+
+            document.querySelector('.modal-content h2').innerHTML = texto;
+            document.querySelector('.modal-content p').innerHTML = err;
+}
 
 let getBtnTelaInicial = document.querySelector('#btn-comecar');
-
 getBtnTelaInicial.addEventListener('click', async () => {
 
 
     //BARRA LOAD CARREGANDPO 
     let timeBtncomecar;
-    let veririficarJson = 0;
+
 
     if (document.querySelector('#nick-name').value.length > 0) {
 
@@ -134,12 +170,12 @@ getBtnTelaInicial.addEventListener('click', async () => {
 
             document.querySelector('.load').style.width = barraLoad + "%";
             document.querySelector('.load').textContent = 'carregando...';
-            if (barraLoad == 100 && veririficarJson == 0) {
+            if (barraLoad == 100) {
                 barraLoad = 0;
 
             }
 
-            barraLoad += 25;
+            barraLoad += 1;
         }, 200)
 
 
@@ -149,10 +185,10 @@ getBtnTelaInicial.addEventListener('click', async () => {
         let formDataNick = new FormData();
         formDataNick.append('acao', 'GET');
         formDataNick.append('Jogador', getNickName.value)
-
+        formDataNick.append('info', 'um')
 
         let json;
-
+        //fetch 2
         try {
             let response = await fetch(url, { method: 'POST', body: formDataNick, });
 
@@ -161,40 +197,38 @@ getBtnTelaInicial.addEventListener('click', async () => {
                 throw Error("Erro");
 
             }
+            
             json = response.json();
 
         } catch (err) {
 
-            document.getElementById("myModal").style.display = "block";
-            document.getElementsByClassName("close")[0].addEventListener("click", function () {
-                document.getElementById("myModal").style.display = "none";
-            });
-
-            document.querySelector('.modal-content h2').innerHTML = `Erro ao se comunicar com o servidor: `
-            document.querySelector('.modal-content p').innerHTML = err;
-            
+            erroModal('Erro ao se comunicar com o servidor: ',err);
             clearInterval(timeBtncomecar);
             document.querySelector('.load').style.width = "0%";
             document.querySelector('.load').textContent = '';
+
+
         }
 
         if (json) {
-
+           console.log()
             json.then(data => {
-            
+                console.log(data)
+
                 if (data.status == true) {
                     document.querySelector('.load').textContent = '';
                     //modal-content                
                     document.querySelector('#form label')
                         .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
                     document.querySelector('#btn-resultado').classList.toggle('hide', false)
-                    setTimeout(() => {
-                        if (document.querySelector('#form label') != null) {
-                            document.querySelector('#form label').innerHTML = 'NICKNAME:';
+                    
+                    // setTimeout(() => {
+                    //     if (document.querySelector('#form label') != null) {
+                    //         document.querySelector('#form label').innerHTML = 'NICKNAME:';
 
-                        }
-                        document.querySelector('.load').style.width = "0%";
-                    }, 3000);
+                    //     }
+                    //     document.querySelector('.load').style.width = "0%";
+                    // }, 3000);
 
                     let getBtnResultado = document.querySelector('#btn-resultado')
 
@@ -209,9 +243,122 @@ getBtnTelaInicial.addEventListener('click', async () => {
                         document.querySelector('.modal-content p').
                             innerHTML = `Acertos: ${data.resposta.acertos} Erros: ${data.resposta.erros} Tempo: ${data.resposta.duracao}`;
 
+                        let getClassModalContent = document.querySelector('.modal-content');
+
+                        let criarDivJogadores = document.createElement('div');
+                        criarDivJogadores.setAttribute('id', 'lista-todos-jogadores');
+                        criarDivJogadores.innerHTML = `
+                        <input type="button" value="Refazer Quiz" class="btn-inicial" id="btn-refazer-quiz">
+                        <input type="button" value="Ver todos" class="btn-inicial" id="btn-todos-jogadores">
+                        
+                        `
+
+                        if (document.querySelector('#lista-todos-jogadores') == null) { //inserir lista de jogadores somente uma vez
+                            getClassModalContent.appendChild(criarDivJogadores);
+                        }
+
+                        //pegat todas infos dos jogadores do json
+                        let getBtnTodos = document.querySelector('#btn-todos-jogadores');
+
+                        //fetch 3 todso jogadores 
+                        getBtnTodos.addEventListener('click', async () => {
+
+
+                            if (document.querySelector('#resultado-todos-users .lista') == null) {
+
+                                let formDataNick = new FormData();
+                                formDataNick.append('acao', 'GET');
+                                formDataNick.append('info', 'todos');
+
+                                let json;
+                                try {
+                                    let response = await fetch(url, { method: 'POST', body: formDataNick, });
+                                    if (!response) {
+                                        document.querySelector('.load').textContent = '';
+                                        throw Error("Erro");
+
+                                    }
+                                    json = response.json();
+
+                                } catch (err) {
+                                    erroModal('Erro ao se comunicar com o servidor: ',err);
+                                }
+
+                                if (json) {
+                                    document.querySelector('#resultado-todos-users').classList.toggle('hide');
+                                    json.then(todos => {
+
+                                        //função sort colcar numeros de acertos em ordem decerscente 
+                                        let arrayEmOrdem = todos.sort((a, b) => {
+                                            return Number(b.Acertos) - Number(a.Acertos);
+                                        })
+
+                                        for (let x in arrayEmOrdem) {
+
+                                            let criarDiv = document.createElement('div');
+                                            criarDiv.setAttribute('class', 'lista');
+                                            criarDiv.setAttribute('style', 'border-radius: 8px')
+                                            criarDiv.innerHTML = `<span class="infoJogadoresFelx">
+                                            <span class="infoJogadoresPlacar">
+                                            <div class="nomeJogador">${arrayEmOrdem[x].Jogador}</div>
+                                            Acertou: ${arrayEmOrdem[x].Acertos}
+                                            Errou: ${arrayEmOrdem[x].Erros}
+                                            Tempo: ${arrayEmOrdem[x].Duracao}</span>`
+
+                                            document.querySelector('#resultado-todos-users').appendChild(criarDiv)
+                                            document.querySelector('#btn-todos-jogadores').classList.toggle('hide', true)
+                                            setSVGLista('resultado-todos-users');
+                                        }
+                                    })
+                                }
+                            }
+                        })//fim do clicl mostar todos os jogadores recebido do jason
+
+                        //fetch 4 refazer quiz deletar dados no banco de dados
+                        //pegat todas infos dos jogadores do json
+                        let getBTnrefazer = document.querySelector('#btn-refazer-quiz');
+                        getBTnrefazer.addEventListener('click', async () => {
+
+                            let formDataNick = new FormData();
+                            formDataNick.append('acao', 'GET');
+                            formDataNick.append('info', 'refazer');
+                            formDataNick.append('Jogador', getNickName.value)
+
+                            let json;
+                            try {
+                                let response = await fetch(url, { method: 'POST', body: formDataNick, });
+                               
+                                if (!response) {
+                                    document.querySelector('.load').textContent = '';
+                                    throw Error("Erro");
+
+                                }
+
+                                json = response.json();
+
+                            } catch (err) {
+                                erroModal('Erro ao se comunicar com o servidor: ',err);
+                            }
+
+                            if(json){
+                                
+                                json.then(res => {
+                                    
+                                    if(res.erro == false){  
+                                                                             
+                                        location.reload();                                                                           
+                                        
+                                    }else{
+                                        let err = 'errado';
+                                        erroModal('OPS: algo deu ', err);
+                                    }
+                                })
+                               
+                            }
+                        })// fim do click refazer
                     })
 
-                } else {
+                }else {
                     document.querySelector('main').style = "display: block";
                     nomeJogador = getNickName.value //.toUpperCase();
                     document.querySelector('#tela-inicial').remove()
@@ -292,7 +439,7 @@ function setLocal() {
 
         let getJogadores = document.querySelector('.jogadores');
 
-
+        //fetch 1
         const getJson = await fetch(url, {
             method: 'POST',
             body: dadosInserirBackEnd,
@@ -360,28 +507,7 @@ function setLocal() {
 
                 }
 
-                function iconeSVG(cor, pontuacao) {
-                    return `<div class="ultimoganhador" data-tooltip="${pontuacao}">
-                             <svg viewBox="0 0 501.333 501.333">
-                            <path fill="#91573b" d="M136.533 359.467H364.8v141.867H136.533z" />
-                            <ellipse cx="250.667" cy="430.933" fill="#e0e0df" rx="81.067" ry="48" />
-                            <path fill="#e14a4a" d="M174.933 314.667H326.4v44.8H174.933z" />
-                            <path fill="#f16d6e" d="M228.267 195.2h44.8v119.467h-44.8z" />
-                            <path fill="${cor}"
-                                d="M250.667 0L284.8 105.6h110.933l-89.6 65.067L340.267 275.2l-89.6-65.067-89.6 65.067L195.2 170.667 105.6 105.6h110.933z" />
-                        </svg>
-                    </div>`
-                }
-                let getLista = document.querySelectorAll('.lista')
-                if (getLista[0] != undefined) {
-                    getLista[0].innerHTML += iconeSVG('#fec656', 'Última maior pontuação');
-                }
-                if (getLista[1] != undefined) {
-                    getLista[1].innerHTML += iconeSVG('#cccccc', 'Segunda maior pontuação');
-                }
-                if (getLista[2] != undefined) {
-                    getLista[2].innerHTML += iconeSVG('#be6c00', 'Terceira maior pontuação');
-                }
+                setSVGLista('footer');
 
 
             })
