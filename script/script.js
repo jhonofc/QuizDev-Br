@@ -113,12 +113,12 @@ let getnick_name = document.querySelector('#nick-name ');
 getnick_name.addEventListener('input', () => {
 
     if (!document.querySelector('#btn-resultado').classList.contains('hide')) {
-        document.querySelector('#btn-resultado').classList.toggle('hide')        
+        document.querySelector('#btn-resultado').classList.toggle('hide')
     }
 
     if (document.querySelector('#form label') != null) {
-       document.querySelector('#form label').innerHTML = 'NICKNAME:';
-     }
+        document.querySelector('#form label').innerHTML = 'NICKNAME:';
+    }
 
 });
 
@@ -146,14 +146,14 @@ function setSVGLista(onde) {
         getLista[2].innerHTML += iconeSVG('#be6c00', 'Terceira maior pontuação');
     }
 }
-function erroModal(texto,err){
+function erroModal(texto, err) {
     document.getElementById("myModal").style.display = "block";
-            document.getElementsByClassName("close")[0].addEventListener("click", function () {
-                document.getElementById("myModal").style.display = "none";
-            });
+    document.getElementsByClassName("close")[0].addEventListener("click", function () {
+        document.getElementById("myModal").style.display = "none";
+    });
 
-            document.querySelector('.modal-content h2').innerHTML = texto;
-            document.querySelector('.modal-content p').innerHTML = err;
+    document.querySelector('.modal-content h2').innerHTML = texto;
+    document.querySelector('.modal-content p').innerHTML = err;
 }
 
 let getBtnTelaInicial = document.querySelector('#btn-comecar');
@@ -197,12 +197,12 @@ getBtnTelaInicial.addEventListener('click', async () => {
                 throw Error("Erro");
 
             }
-            
+
             json = response.json();
 
         } catch (err) {
 
-            erroModal('Erro ao se comunicar com o servidor: ',err);
+            erroModal('Erro ao se comunicar com o servidor: ', err);
             clearInterval(timeBtncomecar);
             document.querySelector('.load').style.width = "0%";
             document.querySelector('.load').textContent = '';
@@ -211,9 +211,9 @@ getBtnTelaInicial.addEventListener('click', async () => {
         }
 
         if (json) {
-           console.log()
+
             json.then(data => {
-                console.log(data)
+
 
                 if (data.status == true) {
                     document.querySelector('.load').textContent = '';
@@ -221,7 +221,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
                     document.querySelector('#form label')
                         .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
                     document.querySelector('#btn-resultado').classList.toggle('hide', false)
-                    
+
                     // setTimeout(() => {
                     //     if (document.querySelector('#form label') != null) {
                     //         document.querySelector('#form label').innerHTML = 'NICKNAME:';
@@ -281,7 +281,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
                                     json = response.json();
 
                                 } catch (err) {
-                                    erroModal('Erro ao se comunicar com o servidor: ',err);
+                                    erroModal('Erro ao se comunicar com o servidor: ', err);
                                 }
 
                                 if (json) {
@@ -324,41 +324,59 @@ getBtnTelaInicial.addEventListener('click', async () => {
                             formDataNick.append('info', 'refazer');
                             formDataNick.append('Jogador', getNickName.value)
 
-                            let json;
-                            try {
-                                let response = await fetch(url, { method: 'POST', body: formDataNick, });
-                               
-                                if (!response) {
-                                    document.querySelector('.load').textContent = '';
-                                    throw Error("Erro");
+                            if (localStorage.getItem('Quiz-Dev') != null) {
+                                let getNomesNolocal = localStorage.getItem('Quiz-Dev').split(' ');
+                                if (getNomesNolocal.includes(getNickName.value.toUpperCase())) {
+                                    let json;
+                                    try {
+                                        let response = await fetch(url, { method: 'POST', body: formDataNick, });
 
+                                        if (!response) {
+                                            document.querySelector('.load').textContent = '';
+                                            throw Error("Erro");
+
+                                        }
+
+                                        json = response.json();
+
+                                    } catch (err) {
+                                        erroModal('Erro ao se comunicar com o servidor: ', err);
+                                    }
+
+                                    if (json) {
+
+                                        let ibdexOF =  getNomesNolocal.indexOf(getNickName.value.toUpperCase());
+                                        getNomesNolocal.splice(ibdexOF,1);
+                                        let novosDAdosArray = getNomesNolocal.toString().replaceAll(',',' ');
+                                        localStorage.setItem('Quiz-Dev',novosDAdosArray)
+                                        
+
+                                        json.then(res => {
+
+                                            if (res.erro == false) {
+
+                                               setTimeout( location.reload(), 1000);
+
+                                            } else {
+                                                let err = 'errado';
+                                                erroModal('OPS: algo deu ', err);
+                                            }
+                                        })
+
+                                    }
+                                } else {
+                                    erroModal('Sem permissão para refazer ',  getNickName.value);
                                 }
 
-                                json = response.json();
-
-                            } catch (err) {
-                                erroModal('Erro ao se comunicar com o servidor: ',err);
+                            }else {
+                                erroModal('Sem permissão para refazer ',  getNickName.value);
                             }
 
-                            if(json){
-                                
-                                json.then(res => {
-                                    
-                                    if(res.erro == false){  
-                                                                             
-                                        location.reload();                                                                           
-                                        
-                                    }else{
-                                        let err = 'errado';
-                                        erroModal('OPS: algo deu ', err);
-                                    }
-                                })
-                               
-                            }
+
                         })// fim do click refazer
                     })
 
-                }else {
+                } else {
                     document.querySelector('main').style = "display: block";
                     nomeJogador = getNickName.value //.toUpperCase();
                     document.querySelector('#tela-inicial').remove()
@@ -446,6 +464,16 @@ function setLocal() {
         })
             .then(response => response.json())
             .then(dados => {
+
+                //colocar no local Storage
+                if (localStorage.getItem('Quiz-Dev') == null) {
+                    localStorage.setItem('Quiz-Dev', dadosInserir.Jogador.toUpperCase())
+                } else {
+                    let getNomeNoLocal = localStorage.getItem('Quiz-Dev');
+                    let todosOsNomes = getNomeNoLocal + ' ' + dadosInserir.Jogador.toUpperCase();
+                    localStorage.setItem('Quiz-Dev', todosOsNomes);
+                }
+
 
                 //zerar contagem de espera do json vindo do servidor 
                 document.querySelector('#loading').style = 'display: none';
