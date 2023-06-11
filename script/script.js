@@ -365,11 +365,11 @@ getBtnTelaInicial.addEventListener('click', async () => {
 
                                     }
                                 } else {
-                                    erroModal('Sem permissão para refazer ',  getNickName.value);
+                                    erroModal('Sem permissão para editar. ', "NICKNAME: " + getNickName.value);
                                 }
 
                             }else {
-                                erroModal('Sem permissão para refazer ',  getNickName.value);
+                                erroModal('Sem permissão para refazer ', "NICKNAME: "+ getNickName.value);
                             }
 
 
