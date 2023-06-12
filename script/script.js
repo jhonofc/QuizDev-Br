@@ -356,7 +356,9 @@ getBtnTelaInicial.addEventListener('click', async () => {
 
                                             if (res.erro == false) {
 
-                                               setTimeout( location.reload(), 1000);
+                                                document.querySelector('#myModal .close').click();
+                                                document.querySelector('#btn-comecar').click();
+                                               //setTimeout( location.reload(), 1000);
 
                                             } else {
                                                 let err = 'errado';
