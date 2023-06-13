@@ -1,4 +1,4 @@
-//git
+
 //retirar logo do site 00webHost
 let setIntervalVerifcar = setInterval(() => {
     let getDivs = document.querySelectorAll('div')
