@@ -326,7 +326,8 @@ getBtnTelaInicial.addEventListener('click', async () => {
                             }
                             let getNickNameCode = getNickNameCodeArray.join('');
 
-                            let getLocal = JSON.parse(localStorage.getItem('Quiz-Dev'));
+                            let getLocal = localStorage.getItem('Quiz-Dev') != null  ? JSON.parse(localStorage.getItem('Quiz-Dev')) 
+ : null;
 
 
 
