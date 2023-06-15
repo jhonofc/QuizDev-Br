@@ -1,4 +1,3 @@
-
 //retirar logo do site 00webHost
 let setIntervalVerifcar = setInterval(() => {
     let getDivs = document.querySelectorAll('div')
@@ -320,60 +319,69 @@ getBtnTelaInicial.addEventListener('click', async () => {
                         let getBTnrefazer = document.querySelector('#btn-refazer-quiz');
                         getBTnrefazer.addEventListener('click', async () => {
 
-                            let formDataNick = new FormData();
-                            formDataNick.append('acao', 'GET');
-                            formDataNick.append('info', 'refazer');
-                            formDataNick.append('Jogador', getNickName.value)
+                            //verificar no local se tem o jogador nome
+                            let getNickNameCodeArray = [];
+                            for (let x in getNickName.value) {
+                                getNickNameCodeArray.push(getNickName.value.charCodeAt(x));
+                            }
+                            let getNickNameCode = getNickNameCodeArray.join('');
 
-                            if (localStorage.getItem('Quiz-Dev') != null) {
-                                let getNomesNolocal = localStorage.getItem('Quiz-Dev').split(' ');
-                                if (getNomesNolocal.includes(getNickName.value.toUpperCase())) {
-                                    let json;
-                                    try {
-                                        let response = await fetch(url, { method: 'POST', body: formDataNick, });
+                            let getLocal = JSON.parse(localStorage.getItem('Quiz-Dev'));
 
-                                        if (!response) {
-                                            document.querySelector('.load').textContent = '';
-                                            throw Error("Erro");
 
-                                        }
 
-                                        json = response.json();
+                            if (getLocal != null && getLocal.includes(getNickNameCode)) {
 
-                                    } catch (err) {
-                                        erroModal('Erro ao se comunicar com o servidor: ', err);
-                                    }
 
-                                    if (json) {
 
-                                        let ibdexOF =  getNomesNolocal.indexOf(getNickName.value.toUpperCase());
-                                        getNomesNolocal.splice(ibdexOF,1);
-                                        let novosDAdosArray = getNomesNolocal.toString().replaceAll(',',' ');
-                                        localStorage.setItem('Quiz-Dev',novosDAdosArray)
-                                        
+                                let formDataNick = new FormData();
+                                formDataNick.append('acao', 'GET');
+                                formDataNick.append('info', 'refazer');
+                                formDataNick.append('Jogador', getNickName.value)
 
-                                        json.then(res => {
+                                let json;
+                                try {
+                                    let response = await fetch(url, { method: 'POST', body: formDataNick, });
 
-                                            if (res.erro == false) {
-
-                                                document.querySelector('#myModal .close').click();
-                                                document.querySelector('#btn-comecar').click();
-                                               //setTimeout( location.reload(), 1000);
-
-                                            } else {
-                                                let err = 'errado';
-                                                erroModal('OPS: algo deu ', err);
-                                            }
-                                        })
+                                    if (!response) {
+                                        document.querySelector('.load').textContent = '';
+                                        throw Error("Erro");
 
                                     }
-                                } else {
-                                    erroModal('Sem permissão para editar. ', "NICKNAME: " + getNickName.value);
+
+                                    json = response.json();
+
+                                } catch (err) {
+                                    erroModal('Erro ao se comunicar com o servidor: ', err);
                                 }
 
-                            }else {
-                                erroModal('Sem permissão para refazer ', "NICKNAME: "+ getNickName.value);
+                                if (json) {
+
+                                    json.then(res => {
+
+                                        if (res.erro == false) {
+
+                                            setTimeout(() => {
+                                                let indexOF = getLocal.indexOf(getNickNameCode);
+                                                getLocal.splice(indexOF, 1);
+                                                localStorage.setItem('Quiz-Dev', JSON.stringify(getLocal));
+                                                //10010111852
+                                                document.querySelector('#modal .close').click();
+                                                document.querySelector('#btn-comecar').click();
+                                            }, 500)
+                                            //location.reload();
+
+                                        } else {
+                                            let err = 'errado';
+                                            erroModal('OPS: algo deu ', err);
+                                        }
+                                    })
+
+                                }
+                            } else {
+                                erroModal('Sem permissão para editar: ', getNickName.value)
                             }
+
 
 
                         })// fim do click refazer
@@ -394,6 +402,14 @@ getBtnTelaInicial.addEventListener('click', async () => {
         //fim do bloco click
     }
 })
+//iniciar com enter
+let getInputNAme = document.querySelector('#nick-name');
+getInputNAme.addEventListener('keyup', (e) => {
+    if (e.key == 'Enter') {
+        document.querySelector('#btn-comecar').click();
+    }
+})
+
 
 //Gerar hora do topo
 const gerardataHora = () => {
@@ -468,14 +484,28 @@ function setLocal() {
             .then(response => response.json())
             .then(dados => {
 
-                //colocar no local Storage
+                //colocar no local storage
                 if (localStorage.getItem('Quiz-Dev') == null) {
-                    localStorage.setItem('Quiz-Dev', dadosInserir.Jogador.toUpperCase())
+                    let stringToCodeArray = [];
+                    for (let x in dadosInserir.Jogador) {
+                        stringToCodeArray.push(dadosInserir.Jogador.charCodeAt(x));
+                    }
+                    let stringToCode = [stringToCodeArray.join('')];
+
+                    localStorage.setItem('Quiz-Dev', JSON.stringify(stringToCode));
                 } else {
-                    let getNomeNoLocal = localStorage.getItem('Quiz-Dev');
-                    let todosOsNomes = getNomeNoLocal + ' ' + dadosInserir.Jogador.toUpperCase();
-                    localStorage.setItem('Quiz-Dev', todosOsNomes);
+                    let getLocal = JSON.parse(localStorage.getItem('Quiz-Dev'));
+
+                    let stringToCodeArray = [];
+                    for (let x in dadosInserir.Jogador) {
+                        stringToCodeArray.push(dadosInserir.Jogador.charCodeAt(x));
+                    }
+                    getLocal.push(stringToCodeArray.join(''));
+
+                    localStorage.setItem('Quiz-Dev', JSON.stringify(getLocal));
+
                 }
+
 
 
                 //zerar contagem de espera do json vindo do servidor 
@@ -567,7 +597,7 @@ function gerarTempo() {
             document.querySelector('#duracao').style = 'display: block;';
             getTempo.innerHTML = `${segundos}s`;
         } else {
-            getTempo.innerHTML = `${minutos}m ${segundos}s`;
+            getTempo.innerHTML = `${minutos}m:${segundos}s`;
         }
 
         if (controle > 9) {
