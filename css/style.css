@@ -35,7 +35,9 @@ html {
     color: #fff;
     text-decoration: none;
 }
-
+#topo img{
+    max-width: 140px;
+}
 .barra-logo {
     background-color: #024467;
     width: 70%;
