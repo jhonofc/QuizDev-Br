@@ -562,7 +562,7 @@ function setLocal() {
                         letClasssetbg = document.querySelectorAll('.nomeJogador')[i].parentNode.parentNode.parentNode;
                         letClasssetbg.style = ' background-color: #c2daff';
                         if(document.querySelectorAll('.svg-whats')[i] != undefined){
-                            document.querySelectorAll('.svg-whats')[i].innerHTML = `<a href="${openWhats()}"  target="_BLANK" >${svgWhats()}</a> `;
+                            document.querySelectorAll('.svg-whats')[i].innerHTML = `<a href="${openWhats()}"  target="_BLANK" rel="noopener noreferrer">${svgWhats()}</a> `;
                             document.querySelectorAll('.whats-compartinhar-pontuacao')[i].innerHTML = '';
     
                         }
