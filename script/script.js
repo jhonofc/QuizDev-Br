@@ -560,9 +560,12 @@ function setLocal() {
 
                         letClasssetbg = document.querySelectorAll('.nomeJogador')[i].parentNode.parentNode.parentNode;
                         letClasssetbg.style = ' background-color: #c2daff';
-                        document.querySelectorAll('.svg-whats')[i].innerHTML = `<a href="${openWhats()}"  target="_BLANK" >${svgWhats()}</a> `;
-                        document.querySelectorAll('.whats-compartinhar-pontuacao')[i].innerHTML = '';
-
+                        if(document.querySelectorAll('.svg-whats')[i] != undefined){
+                            document.querySelectorAll('.svg-whats')[i].innerHTML = `<a href="${openWhats()}"  target="_BLANK" >${svgWhats()}</a> `;
+                            document.querySelectorAll('.whats-compartinhar-pontuacao')[i].innerHTML = '';
+    
+                        }
+                       
 
                     }
 
