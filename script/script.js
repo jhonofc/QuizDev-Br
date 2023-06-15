@@ -471,7 +471,7 @@ function setLocal() {
         })
             .then(response => response.json())
             .then(dados => {
-                document.querySelector('fotter').classList.toggle('hide');
+                document.querySelector('footer').classList.toggle('hide');
                 //colocar no local storage
                 if (localStorage.getItem('Quiz-Dev') == null) {
                     let stringToCodeArray = [];
