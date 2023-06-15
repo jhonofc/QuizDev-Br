@@ -1,22 +1,3 @@
-//retirar logo do site 00webHost
-let setIntervalVerifcar = setInterval(() => {
-    let getDivs = document.querySelectorAll('div')
-    let urlImg = 'https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png'
-
-    for (let x = 0; x < getDivs.length; x++) {
-
-        if (getDivs[x].querySelector('a img')?.src == urlImg) {
-            getDivs[x].remove()
-
-            clearInterval(setIntervalVerifcar)
-        }
-
-
-    }
-
-
-
-}, 100)
 let intervalLoading;
 let loading = 0;
 let controle = 0; //inica em 0
