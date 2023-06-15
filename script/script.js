@@ -1,3 +1,22 @@
+//retirar logo do site 00webHost
+let setIntervalVerifcar = setInterval(() => {
+    let getDivs = document.querySelectorAll('div')
+    let urlImg = 'https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png'
+
+    for (let x = 0; x < getDivs.length; x++) {
+
+        if (getDivs[x].querySelector('a img')?.src == urlImg) {
+            getDivs[x].remove()
+
+            clearInterval(setIntervalVerifcar)
+        }
+
+
+    }
+
+
+
+}, 100)
 let intervalLoading;
 let loading = 0;
 let controle = 0; //inica em 0
@@ -140,6 +159,8 @@ function erroModal(texto, err) {
 let getBtnTelaInicial = document.querySelector('#btn-comecar');
 getBtnTelaInicial.addEventListener('click', async () => {
 
+    setTimeout(document.querySelector('#data').innerHTML = `1/10`, 500)
+    
 
     //BARRA LOAD CARREGANDPO 
     let timeBtncomecar;
@@ -303,7 +324,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
                             //verificar no local se tem o jogador nome
                             let getNickNameCodeArray = [];
                             let nomeUpper = getNickName.value.toUpperCase();
-                            for (let x in getNickName.value) {
+                            for (let x in nomeUpper) {
 
                                 getNickNameCodeArray.push(nomeUpper.charCodeAt(x));
 
@@ -314,7 +335,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
                                 : null;
 
 
-
+                           
                             if (getLocal != null && getLocal.includes(getNickNameCode)) {
 
 
@@ -419,11 +440,8 @@ const gerardataHora = () => {
 
 
     }, 1000)
-
-
-
 }
-gerardataHora();
+//gerardataHora();
 
 
 //Função criar alerta 
@@ -482,6 +500,7 @@ function setLocal() {
                     let stringToCode = [stringToCodeArray.join('')];
 
                     localStorage.setItem('Quiz-Dev', JSON.stringify(stringToCode));
+                    
                 } else {
                     let getLocal = JSON.parse(localStorage.getItem('Quiz-Dev'));
 
@@ -743,6 +762,8 @@ function ativar_questaoes() {
 //passar para próxima questão 
 function proximo() {
 
+    if(controle < 9) document.querySelector('#data').innerHTML = `${controle+2}/10`; //contagem topo questões
+
     let getQuestões = document.querySelectorAll('.questoes ul li');
     for (let x = 0; x < getQuestões.length; x++) {
         if (getQuestões[x].style.backgroundColor != '') {
@@ -829,16 +850,3 @@ let inputNinck = document.querySelector('#nick-name');
 inputNinck.addEventListener('input', (e) => {
     e.preventDefault();
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
