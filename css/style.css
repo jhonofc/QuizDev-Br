@@ -1,47 +1,55 @@
-*{
+* {
     padding: 0;
     margin: 0;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     transition: .5s;
 }
-main{
+
+main {
     display: none;
 }
-body,html{
-    background-color: #F6F6F6; 
-}
-#container{
+
+body,
+html {
     background-color: #F6F6F6;
-     padding-bottom: 50px; 
-    
 }
 
-.quiz-topo{
-    padding: 30px 0px 30px 20px;    
+#container {
+    background-color: #F6F6F6;
+    padding-bottom: 50px;
+
+}
+
+.quiz-topo {
+    padding: 30px 0px 30px 20px;
     color: #fff;
     font-size: 1.3rem;
 }
-.topo{
+
+.topo {
     display: flex;
     justify-content: space-between;
 }
 
-#Topo a{
+#Topo a {
     color: #fff;
     text-decoration: none;
 }
-.barra-logo{   
-    background-color: #024467;    
+
+.barra-logo {
+    background-color: #024467;
     width: 70%;
-    
+
 }
-.barra-data{  
-    display: flex;  
-    background-color: #69CAFF;   
+
+.barra-data {
+    display: flex;
+    background-color: #69CAFF;
     width: 30%;
     justify-content: center;
 }
-.titulo{
+
+.titulo {
     display: flex;
     justify-content: center;
     font-size: 1.5rem;
@@ -49,16 +57,17 @@ body,html{
     margin: 10px 0;
     color: #024467;
 }
-#perguntas{
+
+#perguntas {
     display: flex;
-    justify-content: center;   
+    justify-content: center;
     margin-top: 10px;
 
 }
 
-.questoes{
+.questoes {
     display: flex;
-    
+
     align-items: center;
     flex-direction: column;
     background-color: #E6E7E8;
@@ -67,7 +76,7 @@ body,html{
     padding: 10px 0;
 }
 
-.titulo-pergunta{
+.titulo-pergunta {
     margin: 10px;
     font-size: 1.6rem;
     background-color: #69CAFF;
@@ -75,117 +84,135 @@ body,html{
     border-radius: 8px;
     text-align: center;
     width: 85%;
-   
+
 }
-.titulo-pergunta code{
+
+.titulo-pergunta code {
     word-break: break-all;
     color: #fff;
     font-style: italic;
     font-size: 1.4rem;
 }
-#btn-box{
+
+#btn-box {
     display: flex;
     justify-content: center;
     margin-top: 10px;
 }
-.btn-box{
+
+.btn-box {
     display: flex;
     width: 80%;
     justify-content: flex-end;
 }
-.btn-proximo{
+
+.btn-proximo {
     background-color: #00A859;
     border-radius: 15px;
     cursor: pointer;
     color: #fff;
     padding: 8px;
-    width: 80px;    
+    width: 80px;
     text-align: center;
-    margin-left: 10px;   
+    margin-left: 10px;
 }
-#btn-proximo{
+
+#btn-proximo {
     opacity: 100%;
 }
-.reiniciar{
+
+.reiniciar {
     background-color: #a80000;
 }
-.btn-proximo:hover, .sim:hover{
+
+.btn-proximo:hover,
+.sim:hover {
     background-color: #06d776;
 }
-.reiniciar:hover, .nao:hover{
+
+.reiniciar:hover,
+.nao:hover {
     background-color: #e43737;
 }
-#pontuacao{
+
+#pontuacao {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 10px;
-    
+
 }
-.pontuacao{
+
+.pontuacao {
     display: flex;
     width: 80%;
-    background-color: #024467; 
+    background-color: #024467;
     padding: 30px 0;
     border-radius: 10px;
     color: #fff;
     justify-content: center;
-    
+
 }
 
-.pontuacao span{
+.pontuacao span {
     margin: 0px;
     font-size: 1.8rem;
     text-align: center;
 
 }
 
-li{
+li {
     margin: 5px;
     list-style-type: none;
     font-size: 1.5rem;
     padding: 5px;
     border-bottom: 2px solid #c3c3c3;
-    
+
 }
-.hover:hover{
+
+.hover:hover {
     background-color: #69CAFF;
     border-radius: 10px;
 }
 
-li, input[type=radio]{
+li,
+input[type=radio] {
     cursor: pointer;
 }
 
-.hide, #duracao{
+.hide,
+#duracao {
     display: none;
 }
 
-.cursor{
-   cursor:not-allowed;
+.cursor {
+    cursor: not-allowed;
 }
-.jogadores{
+
+.jogadores {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.lista{
-    background-color: #024467; 
+
+.lista {
+    background-color: #024467;
     text-align: center;
     margin: 10px 0;
     padding: 10px 0;
     width: 80%;
     color: #fff;
     border-radius: 10px;
-    
+
 }
 
-#msg{
+#msg {
     position: relative;
-    
-   
+
+
 }
-.alert{
+
+.alert {
     transition: .5s;
     background-color: #fffec9;
     height: 50px;
@@ -197,52 +224,56 @@ li, input[type=radio]{
     left: 50%;
     transform: translate(-50%, -50%);
 
-   
-    
+
+
 }
 
-.colocar-alert{
+.colocar-alert {
     top: 25px;
     height: 80px;
     padding-top: 55px;
     margin-top: 20px;
 }
-.btn-acao{
+
+.btn-acao {
     display: flex;
     justify-content: flex-end;
     padding: 5px;
 }
-.btn-SN{
+
+.btn-SN {
     border-radius: 5px;
     cursor: pointer;
     color: #fff;
-    padding: 4px;      
+    padding: 4px;
     text-align: center;
     font-size: .9rem;
     margin-left: 5px;
-    
+
 }
 
-.sim{
+.sim {
     background-color: #00A859;
-    
-}
-.nao{
-    
-   background-color: #a80000;
+
 }
 
-#acertos, #erros{
+.nao {
+
+    background-color: #a80000;
+}
+
+#acertos,
+#erros {
     margin-right: 5px;
 }
 
 
-.lista{
-    position: relative ;
-    
+.lista {
+    position: relative;
+
 }
 
-.ultimoganhador svg{
+.ultimoganhador svg {
     position: absolute;
     width: 40px;
     bottom: 5px;
@@ -252,10 +283,10 @@ li, input[type=radio]{
 
 [data-tooltip] {
     position: relative;
-    
-  }
-  
-  [data-tooltip]:after {
+
+}
+
+[data-tooltip]:after {
     display: none;
     position: absolute;
     top: -5px;
@@ -267,86 +298,89 @@ li, input[type=radio]{
     background-color: #69CAFF;
     color: White;
     z-index: 999;
-  }
-  
-  [data-tooltip]:hover:after {
-    display: block;
-  }
+}
 
-  .boxWhats svg{
+[data-tooltip]:hover:after {
+    display: block;
+}
+
+.boxWhats svg {
     width: 30px;
     height: 30px;
     background-color: #fff;
     padding: 5px;
     border-radius: 10px 0px 0px 10px;
-  }
+}
 
-  .whatsApp{
+.whatsApp {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    
-  }
 
-  .boxWhats{
+}
+
+.boxWhats {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    
-  }
 
-  .textoZAp{
+}
+
+.textoZAp {
     background-color: #00A859;
     color: #fff;
     padding: 5px;
     border-radius: 0px 10px 10px 0px;
 
-  }
+}
 
-  #tela-inicial{
+#tela-inicial {
     display: flex;
     align-items: center;
     justify-content: center;
-    position:  fixed ;
+    position: fixed;
     background-image: linear-gradient(180deg, #024467, #036fa9);
     width: 100vw;
     height: 100vh;
-  }
+}
+
 /* css form */
-  #form {
-    
-    width: 80%; 
-    max-width: 500px;   
+#form {
+
+    width: 80%;
+    max-width: 500px;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  #form label {
+#form label {
     display: block;
     margin-bottom: 10px;
     color: #333333;
-  }
+}
 
-  #nick-name {
+#nick-name {
     width: 100%;
     padding: 8px;
     font-size: 16px;
     border: 1px solid #cccccc;
     border-radius: 4px;
     box-sizing: border-box;
-  }
-.comecar{
+}
+
+.comecar {
     display: flex;
     color: #fff;
     flex-direction: row;
     align-items: center;
     margin-top: 10px;
 }
-.btn-inicial{
+
+.btn-inicial {
     padding: 5px 5px;
     margin-left: 5px;
     ;
@@ -356,78 +390,92 @@ li, input[type=radio]{
     color: #fff;
     cursor: pointer;
 }
-#btn-resultado, #btn-refazer-quiz{
+
+#btn-resultado,
+#btn-refazer-quiz {
     background: #be0010;
 }
-.comecar #btn-comecar:hover{
+
+.comecar #btn-comecar:hover {
     background-color: #02c96c;
 }
-  .barra{    
+
+.barra {
     width: 90%;
     height: 25px;
-    
-    background-color:#024467;
+
+    background-color: #024467;
     color: #ffffff;
     border: none;
     border-radius: 5px;
-    
-  }
- 
 
-.load{    
-    background-color: #69CAFF;    
+}
+
+
+.load {
+    background-color: #69CAFF;
     height: 100%;
     width: 0%;
     border-radius: 5px;
-    
+
 }
 
-  button:hover {
+button:hover {
     background-color: #45a049;
-  }
+}
 
 
- .opacidade{
+.opacidade {
     opacity: 0;
 }
 
-#loading{
-  display: none;
+#loading {
+    display: none;
 }
 
-#lista-todos-jogadores{
+#lista-todos-jogadores {
     display: flex;
     justify-content: flex-end;
     padding-top: 15px;
-    
+
 }
-#lista-todos-jogadores input{
+
+#lista-todos-jogadores input {
     padding: 10px 10px;
 }
 
-@media (max-width: 700px){
-    .pontuacao span{
-        font-size:  1rem;
+@media (max-width: 700px) {
+    .pontuacao span {
+        font-size: 1rem;
     }
-  .pontuacao{
-     width: 80%;
-     flex-direction: row;
-     justify-content: center ;
-   }
+
+    .pontuacao {
+        width: 80%;
+        flex-direction: row;
+        justify-content: center;
+    }
+
     .colocar-alert {
-        width: 50%; 
+        width: 50%;
     }
-    .questoes{
+
+    .questoes {
         width: 95%;
-        
+
     }
+
     #getName form {
-    margin-bottom: 50%;
-    
-  }
-  .questoes {
- 
-    align-items: stretch;
-  } 
-    
+        margin-bottom: 50%;
+
+    }
+
+    .questoes {
+
+        align-items: stretch;
+    }
+
+    .jogadores {
+        height: 70vh;
+        overflow-y: scroll;
+    }
 }
