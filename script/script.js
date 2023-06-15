@@ -321,8 +321,11 @@ getBtnTelaInicial.addEventListener('click', async () => {
 
                             //verificar no local se tem o jogador nome
                             let getNickNameCodeArray = [];
+                            let nomeUpper = getNickName.value.toUpperCase();
                             for (let x in getNickName.value) {
-                                getNickNameCodeArray.push(getNickName.value.charCodeAt(x));
+
+                                getNickNameCodeArray.push(nomeUpper.charCodeAt(x));
+
                             }
                             let getNickNameCode = getNickNameCodeArray.join('');
 
@@ -491,8 +494,9 @@ function setLocal() {
                 //colocar no local storage
                 if (localStorage.getItem('Quiz-Dev') == null) {
                     let stringToCodeArray = [];
-                    for (let x in dadosInserir.Jogador) {
-                        stringToCodeArray.push(dadosInserir.Jogador.charCodeAt(x));
+                    let nomeUpper = dadosInserir.Jogador.toUpperCase();
+                    for (let x in nomeUpper) {
+                        stringToCodeArray.push(nomeUpper.charCodeAt(x));
                     }
                     let stringToCode = [stringToCodeArray.join('')];
 
@@ -501,8 +505,9 @@ function setLocal() {
                     let getLocal = JSON.parse(localStorage.getItem('Quiz-Dev'));
 
                     let stringToCodeArray = [];
-                    for (let x in dadosInserir.Jogador) {
-                        stringToCodeArray.push(dadosInserir.Jogador.charCodeAt(x));
+                    let nomeUpper = dadosInserir.Jogador.toUpperCase();
+                    for (let x in nomeUpper) {
+                        stringToCodeArray.push(nomeUpper.charCodeAt(x));
                     }
                     getLocal.push(stringToCodeArray.join(''));
 
