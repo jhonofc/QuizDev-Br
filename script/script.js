@@ -159,257 +159,265 @@ function erroModal(texto, err) {
 let getBtnTelaInicial = document.querySelector('#btn-comecar');
 getBtnTelaInicial.addEventListener('click', async () => {
 
-    setTimeout(document.querySelector('#data').innerHTML = `1/10`, 500)
+
+    if(document.querySelector('#nick-name').value.length > 2){
+        setTimeout(document.querySelector('#data').innerHTML = `1/10`, 500)
     
 
-    //BARRA LOAD CARREGANDPO 
-    let timeBtncomecar;
-
-
-    if (document.querySelector('#nick-name').value.length > 0) {
-
-        timeBtncomecar = setInterval(() => {
-
-            document.querySelector('.load').style.width = barraLoad + "%";
-            document.querySelector('.load').textContent = 'carregando...';
-            if (barraLoad == 100) {
-                barraLoad = 0;
-
-            }
-
-            barraLoad += 1;
-        }, 200)
-
-
-        let getNickName = document.querySelector('#nick-name');
-        //backup carregamento barra
-
-        let formDataNick = new FormData();
-        formDataNick.append('acao', 'GET');
-        formDataNick.append('Jogador', getNickName.value)
-        formDataNick.append('info', 'um')
-
-        let json;
-        //fetch 2
-        try {
-            let response = await fetch(url, { method: 'POST', body: formDataNick, });
-
-            if (!response) {
-                document.querySelector('.load').textContent = '';
-                throw Error("Erro");
-
-            }
-
-            json = response.json();
-
-        } catch (err) {
-
-            erroModal('Erro ao se comunicar com o servidor: ', err);
-            clearInterval(timeBtncomecar);
-            document.querySelector('.load').style.width = "0%";
-            document.querySelector('.load').textContent = '';
-
-
-        }
-
-        if (json) {
-
-            json.then(data => {
-
-
-                if (data.status == true) {
-                    document.querySelector('.load').textContent = '';
-                    //modal-content                
-                    document.querySelector('#form label')
-                        .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
-                    document.querySelector('#btn-resultado').classList.toggle('hide', false)
-
-                    // setTimeout(() => {
-                    //     if (document.querySelector('#form label') != null) {
-                    //         document.querySelector('#form label').innerHTML = 'NICKNAME:';
-
-                    //     }
-                    //     document.querySelector('.load').style.width = "0%";
-                    // }, 3000);
-
-                    let getBtnResultado = document.querySelector('#btn-resultado')
-
-                    getBtnResultado.addEventListener('click', () => {
-
-                        document.getElementById("myModal").style.display = "block";
-                        document.getElementsByClassName("close")[0].addEventListener("click", function () {
-                            document.getElementById("myModal").style.display = "none";
-                        });
-
-                        document.querySelector('.modal-content h2').innerHTML = `${data.resposta.jogador}`
-                        document.querySelector('.modal-content p').
-                            innerHTML = `Acertos: ${data.resposta.acertos} Erros: ${data.resposta.erros} Tempo: ${data.resposta.duracao}`;
-
-                        let getClassModalContent = document.querySelector('.modal-content');
-
-                        let criarDivJogadores = document.createElement('div');
-                        criarDivJogadores.setAttribute('id', 'lista-todos-jogadores');
-                        criarDivJogadores.innerHTML = `
-                        <input type="button" value="Refazer Quiz" class="btn-inicial" id="btn-refazer-quiz">
-                        <input type="button" value="Ver todos" class="btn-inicial" id="btn-todos-jogadores">
-                        
-                        `
-
-                        if (document.querySelector('#lista-todos-jogadores') == null) { //inserir lista de jogadores somente uma vez
-                            getClassModalContent.appendChild(criarDivJogadores);
-                        }
-
-                        //pegat todas infos dos jogadores do json
-                        let getBtnTodos = document.querySelector('#btn-todos-jogadores');
-
-                        //fetch 3 todso jogadores 
-                        getBtnTodos.addEventListener('click', async () => {
-
-
-                            if (document.querySelector('#resultado-todos-users .lista') == null) {
-
-                                let formDataNick = new FormData();
-                                formDataNick.append('acao', 'GET');
-                                formDataNick.append('info', 'todos');
-
-                                let json;
-                                try {
-                                    let response = await fetch(url, { method: 'POST', body: formDataNick, });
-                                    if (!response) {
-                                        document.querySelector('.load').textContent = '';
-                                        throw Error("Erro");
-
-                                    }
-                                    json = response.json();
-
-                                } catch (err) {
-                                    erroModal('Erro ao se comunicar com o servidor: ', err);
-                                }
-
-                                if (json) {
-                                    document.querySelector('#resultado-todos-users').classList.toggle('hide');
-                                    json.then(todos => {
-
-                                        //função sort colcar numeros de acertos em ordem decerscente 
-                                        let arrayEmOrdem = todos.sort((a, b) => {
-                                            return Number(b.Acertos) - Number(a.Acertos);
-                                        })
-
-                                        for (let x in arrayEmOrdem) {
-
-                                            let criarDiv = document.createElement('div');
-                                            criarDiv.setAttribute('class', 'lista');
-                                            criarDiv.setAttribute('style', 'border-radius: 8px')
-                                            criarDiv.innerHTML = `<span class="infoJogadoresFelx">
-                                            <span class="infoJogadoresPlacar">
-                                            <div class="nomeJogador">${arrayEmOrdem[x].Jogador}</div>
-                                            Acertou: ${arrayEmOrdem[x].Acertos}
-                                            Errou: ${arrayEmOrdem[x].Erros}
-                                            Tempo: ${arrayEmOrdem[x].Duracao}</span>`
-
-                                            document.querySelector('#resultado-todos-users').appendChild(criarDiv)
-                                            document.querySelector('#btn-todos-jogadores').classList.toggle('hide', true)
-                                            setSVGLista('resultado-todos-users');
-                                        }
-                                    })
-                                }
-                            }
-                        })//fim do clicl mostar todos os jogadores recebido do jason
-
-                        //fetch 4 refazer quiz deletar dados no banco de dados
-                        //pegat todas infos dos jogadores do json
-                        let getBTnrefazer = document.querySelector('#btn-refazer-quiz');
-                        getBTnrefazer.addEventListener('click', async () => {
-
-                            //verificar no local se tem o jogador nome
-                            let getNickNameCodeArray = [];
-                            let nomeUpper = getNickName.value.toUpperCase();
-                            for (let x in nomeUpper) {
-
-                                getNickNameCodeArray.push(nomeUpper.charCodeAt(x));
-
-                            }
-                            let getNickNameCode = getNickNameCodeArray.join('');
-
-                            let getLocal = localStorage.getItem('Quiz-Dev') != null ? JSON.parse(localStorage.getItem('Quiz-Dev'))
-                                : null;
-
-
-                           
-                            if (getLocal != null && getLocal.includes(getNickNameCode)) {
-
-
-
-                                let formDataNick = new FormData();
-                                formDataNick.append('acao', 'GET');
-                                formDataNick.append('info', 'refazer');
-                                formDataNick.append('Jogador', getNickName.value)
-
-                                let json;
-                                try {
-                                    let response = await fetch(url, { method: 'POST', body: formDataNick, });
-
-                                    if (!response) {
-                                        document.querySelector('.load').textContent = '';
-                                        throw Error("Erro");
-
-                                    }
-
-                                    json = response.json();
-
-                                } catch (err) {
-                                    erroModal('Erro ao se comunicar com o servidor: ', err);
-                                }
-
-                                if (json) {
-
-                                    json.then(res => {
-
-                                        if (res.erro == false) {
-
-                                            setTimeout(() => {
-                                                let indexOF = getLocal.indexOf(getNickNameCode);
-                                                getLocal.splice(indexOF, 1);
-                                                localStorage.setItem('Quiz-Dev', JSON.stringify(getLocal));
-                                                //10010111852
-                                                document.querySelector('#modal .close').click();
-                                                document.querySelector('#btn-comecar').click();
-                                            }, 500)
-                                            //location.reload();
-
-                                        } else {
-                                            let err = 'errado';
-                                            erroModal('OPS: algo deu ', err);
-                                        }
-                                    })
-
-                                }
-                            } else {
-                                erroModal('Sem permissão para editar: ', getNickName.value)
-                            }
-
-
-
-                        })// fim do click refazer
-                    })
-
-                } else {
-                    document.querySelector('main').style = "display: block";
-                    nomeJogador = getNickName.value //.toUpperCase();
-                    document.querySelector('#tela-inicial')?.remove()
+        //BARRA LOAD CARREGANDPO 
+        let timeBtncomecar;
+    
+    
+        if (document.querySelector('#nick-name').value.length > 0) {
+    
+            timeBtncomecar = setInterval(() => {
+    
+                document.querySelector('.load').style.width = barraLoad + "%";
+                document.querySelector('.load').textContent = 'carregando...';
+                if (barraLoad == 100) {
+                    barraLoad = 0;
+    
                 }
-            })
-
-            clearInterval(timeBtncomecar);
-            if (document.querySelector('.load') != null) {
-                document.querySelector('.load').style.width = "100%";
+    
+                barraLoad += 1;
+            }, 200)
+    
+    
+            let getNickName = document.querySelector('#nick-name');
+            //backup carregamento barra
+    
+            let formDataNick = new FormData();
+            formDataNick.append('acao', 'GET');
+            formDataNick.append('Jogador', getNickName.value)
+            formDataNick.append('info', 'um')
+    
+            let json;
+            //fetch 2
+            try {
+                let response = await fetch(url, { method: 'POST', body: formDataNick, });
+    
+                if (!response) {
+                    document.querySelector('.load').textContent = '';
+                    throw Error("Erro");
+    
+                }
+    
+                json = response.json();
+    
+            } catch (err) {
+    
+                erroModal('Erro ao se comunicar com o servidor: ', err);
+                clearInterval(timeBtncomecar);
+                document.querySelector('.load').style.width = "0%";
+                document.querySelector('.load').textContent = '';
+    
+    
             }
-           
-            //****/           
-
-        }
-        //fim do bloco click
+    
+            if (json) {
+    
+                json.then(data => {
+    
+    
+                    if (data.status == true) {
+                        document.querySelector('.load').textContent = '';
+                        //modal-content                
+                        document.querySelector('#form label')
+                            .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
+                        document.querySelector('#btn-resultado').classList.toggle('hide', false)
+    
+                        // setTimeout(() => {
+                        //     if (document.querySelector('#form label') != null) {
+                        //         document.querySelector('#form label').innerHTML = 'NICKNAME:';
+    
+                        //     }
+                        //     document.querySelector('.load').style.width = "0%";
+                        // }, 3000);
+    
+                        let getBtnResultado = document.querySelector('#btn-resultado')
+    
+                        getBtnResultado.addEventListener('click', () => {
+    
+                            document.getElementById("myModal").style.display = "block";
+                            document.getElementsByClassName("close")[0].addEventListener("click", function () {
+                                document.getElementById("myModal").style.display = "none";
+                            });
+    
+                            document.querySelector('.modal-content h2').innerHTML = `${data.resposta.jogador}`
+                            document.querySelector('.modal-content p').
+                                innerHTML = `Acertos: ${data.resposta.acertos} Erros: ${data.resposta.erros} Tempo: ${data.resposta.duracao}`;
+    
+                            let getClassModalContent = document.querySelector('.modal-content');
+    
+                            let criarDivJogadores = document.createElement('div');
+                            criarDivJogadores.setAttribute('id', 'lista-todos-jogadores');
+                            criarDivJogadores.innerHTML = `
+                            <input type="button" value="Refazer Quiz" class="btn-inicial" id="btn-refazer-quiz">
+                            <input type="button" value="Ver todos" class="btn-inicial" id="btn-todos-jogadores">
+                            
+                            `
+    
+                            if (document.querySelector('#lista-todos-jogadores') == null) { //inserir lista de jogadores somente uma vez
+                                getClassModalContent.appendChild(criarDivJogadores);
+                            }
+    
+                            //pegat todas infos dos jogadores do json
+                            let getBtnTodos = document.querySelector('#btn-todos-jogadores');
+    
+                            //fetch 3 todso jogadores 
+                            getBtnTodos.addEventListener('click', async () => {
+    
+    
+                                if (document.querySelector('#resultado-todos-users .lista') == null) {
+    
+                                    let formDataNick = new FormData();
+                                    formDataNick.append('acao', 'GET');
+                                    formDataNick.append('info', 'todos');
+    
+                                    let json;
+                                    try {
+                                        let response = await fetch(url, { method: 'POST', body: formDataNick, });
+                                        if (!response) {
+                                            document.querySelector('.load').textContent = '';
+                                            throw Error("Erro");
+    
+                                        }
+                                        json = response.json();
+    
+                                    } catch (err) {
+                                        erroModal('Erro ao se comunicar com o servidor: ', err);
+                                    }
+    
+                                    if (json) {
+                                        document.querySelector('#resultado-todos-users').classList.toggle('hide');
+                                        json.then(todos => {
+    
+                                            //função sort colcar numeros de acertos em ordem decerscente 
+                                            let arrayEmOrdem = todos.sort((a, b) => {
+                                                return Number(b.Acertos) - Number(a.Acertos);
+                                            })
+    
+                                            for (let x in arrayEmOrdem) {
+    
+                                                let criarDiv = document.createElement('div');
+                                                criarDiv.setAttribute('class', 'lista');
+                                                criarDiv.setAttribute('style', 'border-radius: 8px')
+                                                criarDiv.innerHTML = `<span class="infoJogadoresFelx">
+                                                <span class="infoJogadoresPlacar">
+                                                <div class="nomeJogador">${arrayEmOrdem[x].Jogador}</div>
+                                                Acertou: ${arrayEmOrdem[x].Acertos}
+                                                Errou: ${arrayEmOrdem[x].Erros}
+                                                Tempo: ${arrayEmOrdem[x].Duracao}</span>`
+    
+                                                document.querySelector('#resultado-todos-users').appendChild(criarDiv)
+                                                document.querySelector('#btn-todos-jogadores').classList.toggle('hide', true)
+                                                setSVGLista('resultado-todos-users');
+                                            }
+                                        })
+                                    }
+                                }
+                            })//fim do clicl mostar todos os jogadores recebido do jason
+    
+                            //fetch 4 refazer quiz deletar dados no banco de dados
+                            //pegat todas infos dos jogadores do json
+                            let getBTnrefazer = document.querySelector('#btn-refazer-quiz');
+                            getBTnrefazer.addEventListener('click', async () => {
+    
+                                //verificar no local se tem o jogador nome
+                                let getNickNameCodeArray = [];
+                                let nomeUpper = getNickName.value.toUpperCase();
+                                for (let x in nomeUpper) {
+    
+                                    getNickNameCodeArray.push(nomeUpper.charCodeAt(x));
+    
+                                }
+                                let getNickNameCode = getNickNameCodeArray.join('');
+    
+                                let getLocal = localStorage.getItem('Quiz-Dev') != null ? JSON.parse(localStorage.getItem('Quiz-Dev'))
+                                    : null;
+    
+    
+                               
+                                if (getLocal != null && getLocal.includes(getNickNameCode)) {
+    
+    
+    
+                                    let formDataNick = new FormData();
+                                    formDataNick.append('acao', 'GET');
+                                    formDataNick.append('info', 'refazer');
+                                    formDataNick.append('Jogador', getNickName.value)
+    
+                                    let json;
+                                    try {
+                                        let response = await fetch(url, { method: 'POST', body: formDataNick, });
+    
+                                        if (!response) {
+                                            document.querySelector('.load').textContent = '';
+                                            throw Error("Erro");
+    
+                                        }
+    
+                                        json = response.json();
+    
+                                    } catch (err) {
+                                        erroModal('Erro ao se comunicar com o servidor: ', err);
+                                    }
+    
+                                    if (json) {
+    
+                                        json.then(res => {
+    
+                                            if (res.erro == false) {
+    
+                                                setTimeout(() => {
+                                                    let indexOF = getLocal.indexOf(getNickNameCode);
+                                                    getLocal.splice(indexOF, 1);
+                                                    localStorage.setItem('Quiz-Dev', JSON.stringify(getLocal));
+                                                    //10010111852
+                                                    document.querySelector('#modal .close').click();
+                                                    document.querySelector('#btn-comecar').click();
+                                                }, 500)
+                                                //location.reload();
+    
+                                            } else {
+                                                let err = 'errado';
+                                                erroModal('OPS: algo deu ', err);
+                                            }
+                                        })
+    
+                                    }
+                                } else {
+                                    erroModal('Sem permissão para editar: ', getNickName.value)
+                                }
+    
+    
+    
+                            })// fim do click refazer
+                        })
+    
+                    } else {
+                        document.querySelector('main').style = "display: block";
+                        nomeJogador = getNickName.value //.toUpperCase();
+                        document.querySelector('#tela-inicial')?.remove()
+                    }
+                })
+    
+                clearInterval(timeBtncomecar);
+                if (document.querySelector('.load') != null) {
+                    document.querySelector('.load').style.width = "100%";
+                }
+               
+                //****/           
+    
+            }
+            //fim do bloco click
+        }  
+    }else{
+        erroModal('NICKNAME ERRO','digitado um NICKNAME valido Ex: Pedro55, Jo23, FabioDev')
     }
+
+    
+    
 })
 //iniciar com enter
 let getInputNAme = document.querySelector('#nick-name');
