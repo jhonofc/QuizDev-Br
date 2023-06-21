@@ -413,7 +413,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
             //fim do bloco click
         }  
     }else{
-        erroModal('NICKNAME ERRO','digitado um NICKNAME valido Ex: Pedro55, Jo23, FabioDev')
+        erroModal('NICKNAME ERRO','digitado um NICKNAME válido Ex: Pedro55, Jo23, FabioDev')
     }
 
     
