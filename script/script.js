@@ -397,7 +397,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
     
                     } else {
                         document.querySelector('main').style = "display: block";
-                        nomeJogador = getNickName.value //.toUpperCase();
+                        nomeJogador = getNickName.value.replace(/[<>/'"${}()=]/g, "") //.toUpperCase();
                         document.querySelector('#tela-inicial')?.remove()
                     }
                 })
