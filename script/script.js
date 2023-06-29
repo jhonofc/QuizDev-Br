@@ -183,12 +183,12 @@ getBtnTelaInicial.addEventListener('click', async () => {
             }, 200)
     
     
-            let getNickName = document.querySelector('#nick-name');
+            let getNickName = document.querySelector('#nick-name').value;
             //backup carregamento barra
     
             let formDataNick = new FormData();
             formDataNick.append('acao', 'GET');
-            formDataNick.append('Jogador', getNickName.value)
+            formDataNick.append('Jogador', getNickName.replace(/[<>/'"${}()=]/g, ""))
             formDataNick.append('info', 'um')
     
             let json;
@@ -223,7 +223,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
                         document.querySelector('.load').textContent = '';
                         //modal-content                
                         document.querySelector('#form label')
-                            .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.value} já está em uso.</span>`
+                            .innerHTML += ` <span style="color: red; text-transform: uppercase;">${getNickName.replace(/[<>/'"${}()=]/g, "")} já está em uso.</span>`
                         document.querySelector('#btn-resultado').classList.toggle('hide', false)
     
                         // setTimeout(() => {
@@ -325,7 +325,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
     
                                 //verificar no local se tem o jogador nome
                                 let getNickNameCodeArray = [];
-                                let nomeUpper = getNickName.value.toUpperCase();
+                                let nomeUpper = getNickName.replace(/[<>/'"${}()=]/g, "").toUpperCase();
                                 for (let x in nomeUpper) {
     
                                     getNickNameCodeArray.push(nomeUpper.charCodeAt(x));
@@ -345,7 +345,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
                                     let formDataNick = new FormData();
                                     formDataNick.append('acao', 'GET');
                                     formDataNick.append('info', 'refazer');
-                                    formDataNick.append('Jogador', getNickName.value)
+                                    formDataNick.append('Jogador', getNickName.replace(/[<>/'"${}()=]/g, ""))
     
                                     let json;
                                     try {
@@ -387,7 +387,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
     
                                     }
                                 } else {
-                                    erroModal('Sem permissão para editar: ', getNickName.value)
+                                    erroModal('Sem permissão para editar: ', getNickName.replace(/[<>/'"${}()=]/g, ""))
                                 }
     
     
@@ -397,7 +397,7 @@ getBtnTelaInicial.addEventListener('click', async () => {
     
                     } else {
                         document.querySelector('main').style = "display: block";
-                        nomeJogador = getNickName.value.replace(/[<>/'"${}()=]/g, "") //.toUpperCase();
+                        nomeJogador = getNickName.replace(/[<>/'"${}()=]/g, "") //.toUpperCase();
                         document.querySelector('#tela-inicial')?.remove()
                     }
                 })
